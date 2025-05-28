@@ -1,15 +1,15 @@
 <template>
   <div class="search-container">
-    <input v-model="searchQuery" @input="fetchMovies" placeholder="Buscar película..." />
+    <input v-model="searchQuery" @input="fetchMovies" placeholder="Buscar película..." class="search-box" />
 
-    <select v-model="selectedGenre" @change="fetchMovies">
+    <select v-model="selectedGenre" @change="fetchMovies" class="filter-dropdown">
       <option value="">Todos los géneros</option>
       <option v-for="genre in genres" :key="genre.id" :value="genre.id">
         {{ genre.name }}
       </option>
     </select>
 
-    <div v-if="movies.length">
+    <div v-if="movies.length" class="movie-list">
       <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" @click="showDetails(movie.id)" />
     </div>
   </div>
@@ -65,17 +65,36 @@ onMounted(() => {
 <style scoped>
 .search-container {
   text-align: center;
-}
-
-.filters {
-  margin-top: 20px;
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espacio entre elementos */
 }
 
-.filters select,
-.filters input {
-  padding: 8px;
+.search-box {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
 }
+
+.filter-dropdown {
+  width: 30%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.movie-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
 </style>

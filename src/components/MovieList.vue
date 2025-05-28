@@ -9,6 +9,13 @@
       </option>
     </select>
 
+    <select v-model="selectedYear" @change="fetchMovies" class="filter-dropdown">
+  <option value="">Todos los años</option>
+  <option v-for="year in availableYears" :key="year" :value="year">
+    {{ year }}
+  </option>
+</select>
+
     <div v-if="movies.length" class="movie-list">
       <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" @click="showDetails(movie.id)" />
     </div>
@@ -37,15 +44,31 @@ const fetchGenres = async () => {
   }
 };
 
+const selectedYear = ref("");
+const availableYears = ref([]);
+
+// Generar años desde 1980 hasta el actual
+const generateYears = () => {
+  const currentYear = new Date().getFullYear();
+  for (let year = currentYear; year >= 1980; year--) {
+    availableYears.value.push(year);
+  }
+};
+
 const fetchMovies = async () => {
   let url;
   
-  if (searchQuery.value) {
+if (searchQuery.value) {
     url = `https://api.themoviedb.org/3/search/movie?query=${searchQuery.value}&api_key=184743f81e323770fee4bced181625c3&language=es-MX`;
-  } else if (selectedGenre.value) {
-    url = `https://api.themoviedb.org/3/discover/movie?api_key=184743f81e323770fee4bced181625c3&language=es-MX&with_genres=${selectedGenre.value}`;
   } else {
-    return;
+    url = `https://api.themoviedb.org/3/discover/movie?api_key=184743f81e323770fee4bced181625c3&language=es-MX`;
+    
+    if (selectedGenre.value) {
+      url += `&with_genres=${selectedGenre.value}`;
+    }
+    if (selectedYear.value) {
+      url += `&primary_release_year=${selectedYear.value}`;
+    }
   }
 
   const response = await fetch(url);
@@ -59,6 +82,7 @@ const showDetails = (movieId) => {
 
 onMounted(() => {
   fetchGenres();
+  generateYears();
 });
 </script>
 

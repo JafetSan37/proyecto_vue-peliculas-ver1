@@ -57,6 +57,9 @@ nav a:first-of-type {
 }
 
 @media (min-width: 1024px) {
+  body {
+    background-size: contain;
+  }
   header {
     display: flex;
     place-items: center;

@@ -18,7 +18,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.882);
 }
 
 /* semantic color variables for this project */
@@ -83,4 +83,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*Imagen de fondo*/
+  background-image: url("/src/assets/5073414.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

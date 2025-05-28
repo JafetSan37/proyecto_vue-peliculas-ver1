@@ -29,12 +29,20 @@ onMounted(async () => {
   movie.value = await getMovieDetails(route.params.id);
 
   if (movie.value) {
-    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/credits?api_key=TU_API_KEY&language=es-MX`);
-    const creditsData = await creditsResponse.json();
-    const directorInfo = creditsData.crew.find(person => person.job === "Director");
-    director.value = directorInfo ? directorInfo.name : "Desconocido";
+    try {
+      const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${route.params.id}/credits?api_key=184743f81e323770fee4bced181625c3&language=es-MX`);
+      const creditsData = await creditsResponse.json();
+      
+      const directorInfo = creditsData.crew.find(person => person.job === "Director");
+      director.value = directorInfo ? directorInfo.name : "Desconocido";
+      
+    } catch (error) {
+      console.error("Error al obtener el director:", error);
+      director.value = "Desconocido"; // En caso de error, mantener el valor por defecto
+    }
   }
 });
+
 </script>
 
 <style scoped>

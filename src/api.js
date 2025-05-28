@@ -9,6 +9,16 @@ export const getMovies = async (query) => {
 };
 
 export const getMovieDetails = async (movieId) => {
-    const response = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
-    return response.data;
+    const movieResponse = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-MX`);
+    const creditsResponse = await axios.get(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=es-MX`);
+
+    const movieData = movieResponse.data;
+    const creditsData = creditsResponse.data;
+
+    const director = creditsData.crew.find(person => person.job === "Director");
+
+    return {
+        ...movieData,
+        director: director ? director.name : "Desconocido"
+    };
 };

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cine Info</string>
+    <string name="title_activity_main">Cine Info</string>
+    <string name="package_name">com.cineinfo.app</string>
+    <string name="custom_url_scheme">com.cineinfo.app</string>
+</resources>
